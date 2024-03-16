@@ -6,3 +6,5 @@ if [ ! -f /root/reset ]; then
 	mariadb < /root/wpdb.sql
 	touch /root/reset
 fi
+
+exec mariadbd -u root

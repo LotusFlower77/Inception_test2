@@ -10,3 +10,5 @@ if [ ! -f /root/reset ]; then
 	openssl req -x509 -key /etc/ssl/private/nginx.key -out /etc/ssl/certs/nginx.crt -subj /
 	touch /root/reset
 fi
+
+exec nginx -g "daemon off;"

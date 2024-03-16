@@ -1,10 +1,10 @@
 if [ ! -f /root/reset ]; then
-	ln -s /usr/bin/php82 /usr/bin/php
-	sed -i 's/^user = nobody/user = www-data/' /etc/php82/php-fpm.d/www.conf
-	sed -i 's/^group = nobody/group = www-data/' /etc/php82/php-fpm.d/www.conf
-	sed -i 's/^;listen.owner = nobody/listen.owner = www-data/' /etc/php82/php-fpm.d/www.conf
-	sed -i 's/^;listen.group = nobody/listen.group = www-data/' /etc/php82/php-fpm.d/www.conf
-	sed -i 's/^;listen.mode/listen.mode/' /etc/php82/php-fpm.d/www.conf
+	ln -s /usr/bin/php83 /usr/bin/php
+	sed -i 's/^user = nobody/user = www-data/' /etc/php83/php-fpm.d/www.conf
+	sed -i 's/^group = nobody/group = www-data/' /etc/php83/php-fpm.d/www.conf
+	sed -i 's/^;listen.owner = nobody/listen.owner = www-data/' /etc/php83/php-fpm.d/www.conf
+	sed -i 's/^;listen.group = nobody/listen.group = www-data/' /etc/php83/php-fpm.d/www.conf
+	sed -i 's/^;listen.mode/listen.mode/' /etc/php83/php-fpm.d/www.conf
 	chmod 744 /root/wp-cli.phar
 	cp /root/wp-cli.phar /usr/bin/wp
 	rm -rf /var/www/html/*
@@ -17,3 +17,5 @@ if [ ! -f /root/reset ]; then
 	chown -R www-data:www-data /var/www/html
 	touch /root/reset
 fi
+
+exec php-fpm83 -F
