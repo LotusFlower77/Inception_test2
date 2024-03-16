@@ -1,0 +1,52 @@
+name: inception
+
+services:
+  mariadb:
+    build: ./requirements/mariadb
+    container_name: mariadb
+    env_file:
+      - .env
+    expose:
+      - "3306"
+    networks:
+      - inception
+    volumes:
+      - type: bind
+        source: /home/jeongwok/data/db
+        target: /var/lib/mysql
+    restart: always
+
+  nginx:
+    build: ./requirements/nginx
+    container_name: nginx
+    env_file:
+      - .env
+    networks:
+      - inception
+    ports:
+      - "443"
+    volumes:
+      - type: bind
+        source: /home/jeongwok/data/wordpress
+        target: /var/www/html
+    restart: always
+
+  wordpress:
+    build: ./requirements/wordpress
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    env_file:
+      - .env
+    expose:
+      - "9000"
+    networks:
+      - inception
+    volumes:
+      - type: bind
+        source: /home/jeongwok/data/wordpress
+        target: /var/www/html
+    restart: always
+
+networks:
+  inception:
