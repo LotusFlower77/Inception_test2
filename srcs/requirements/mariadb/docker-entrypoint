@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ -f /root/reset ]; then
+	rm -rf /var/lib/mysql/*
+	mariadbd-safe & sleep 1
+	mariadb-install-db --user=mysql --datadir=/var/lib/mysql
+	mariadb < /root/wpdb.sql
+	rm -f /root/reset
+fi
+
+exec "$@"
