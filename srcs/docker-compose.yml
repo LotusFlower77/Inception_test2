@@ -9,20 +9,23 @@ services:
     expose:
       - "3306"
     networks:
-      - inception
+      - network
     volumes:
       - type: bind
         source: /home/jeongwok/data/db
         target: /var/lib/mysql
     restart: always
+    tty: true
 
   nginx:
     build: ./requirements/nginx
     container_name: nginx
+    depends_on:
+      - wordpress
     env_file:
       - .env
     networks:
-      - inception
+      - network
     ports:
       - "443"
     volumes:
@@ -30,6 +33,7 @@ services:
         source: /home/jeongwok/data/wordpress
         target: /var/www/html
     restart: always
+    tty: true
 
   wordpress:
     build: ./requirements/wordpress
@@ -41,12 +45,13 @@ services:
     expose:
       - "9000"
     networks:
-      - inception
+      - network
     volumes:
       - type: bind
         source: /home/jeongwok/data/wordpress
         target: /var/www/html
     restart: always
+    tty: true
 
 networks:
-  inception:
+  network:
