@@ -1,9 +1,7 @@
 FROM alpine:3.18
 
-COPY [ "setup.sh" , "/root/setup" ]
+COPY --chmod=744 [ "setup.sh" , "/root/setup" ]
 COPY [ "wpdb.sql" , "/root/" ]
-
-RUN chmod 744 /root/setup
 
 RUN [ "/root/setup" ]
 
