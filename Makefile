@@ -10,9 +10,15 @@ build: datadir
 up: datadir
 	docker compose -f ./srcs/docker-compose.yml up -d
 
+re:
+	docker compose -f ./srcs/docker-compose.yml up -d --build
+
 down:
 	docker compose -f ./srcs/docker-compose.yml down
 
 clean: down
 	docker system prune -af
+	docker volume rm $$(docker volume ls -q)
+
+fclean:
 	rm -rf /home/jeongwok/data

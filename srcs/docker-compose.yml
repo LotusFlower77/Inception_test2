@@ -7,13 +7,11 @@ services:
     env_file:
       - .env
     expose:
-      - "3306"
+      - 3306
     networks:
       - network
     volumes:
-      - type: bind
-        source: /home/jeongwok/data/db
-        target: /var/lib/mysql
+      - DB:/var/lib/mysql
     restart: always
     tty: true
 
@@ -27,11 +25,9 @@ services:
     networks:
       - network
     ports:
-      - "443"
+      - 443
     volumes:
-      - type: bind
-        source: /home/jeongwok/data/wordpress
-        target: /var/www/html
+      - WordPress:/var/www/html
     restart: always
     tty: true
 
@@ -43,15 +39,26 @@ services:
     env_file:
       - .env
     expose:
-      - "9000"
+      - 9000
     networks:
       - network
     volumes:
-      - type: bind
-        source: /home/jeongwok/data/wordpress
-        target: /var/www/html
+      - WordPress:/var/www/html
     restart: always
     tty: true
 
 networks:
   network:
+    driver: bridge
+
+volumes:
+  DB:
+    driver_opts:
+      type: local
+      device: /home/jeongwok/data/db
+      o: bind
+  WordPress:
+    driver_opts:
+      type: local
+      device: /home/jeongwok/data/wordpress
+      o: bind
